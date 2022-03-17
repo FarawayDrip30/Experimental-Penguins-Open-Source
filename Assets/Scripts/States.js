@@ -59,7 +59,7 @@ class PlayState extends State{
 
         this.roomButtons = [new RoomButton(snowRoom,20),new RoomButton(northPole,35),new RoomButton(crashSite,50)];
         this.roomButtons[0].img = selectedImg;
-        
+
         this.currentRoom = snowRoom;
         
         this.playerSelected = false;
@@ -144,5 +144,12 @@ class PlayState extends State{
             let angle = Math.atan2(dy, dx);
             this.player.lookAtDest(angle);
         }
+
+        this.roomButtons.forEach(button => {
+            if(button.isClicked(mousePos) != false){
+                document.getElementById("EpicoCanvas").style.cursor = "pointer";
+            }
+        });
+    
     }
 }
