@@ -148,8 +148,42 @@ class Penguin extends Sprite{
         this.x += this.velX * timeScale;
         this.y += this.velY * timeScale;
     }
+}
 
-    draw(){
-        ctx.drawImage(this.img,this.sx,this.sy,this.swidth,this.sheight,this.x + this.originX,this.y + this.originY,this.width,this.height);
+class Room extends Sprite{
+    constructor(img,objects,width,height,swidth,sheight,spawnX,spawnY,name){
+        super(img,0,0,swidth,sheight,0,0,width,height,0,0);
+
+        this.objects = objects;
+
+        this.name = name;
+
+        this.spawnX = spawnX;
+        this.spawnY = spawnY;
+    }
+
+    drawObjects(){
+        for(let i = 0; i < this.objects.length; i++){
+            this.objects[0].draw();
+        }
+    }
+}
+
+class RoomButton extends Sprite{
+    constructor(room,y){
+        super(notSelectedImg,0,0,39,39,600,y,10,10,0,0);
+        this.room = room;
+    }
+
+    isClicked(mousePos){
+        if(isInRect(mousePos.x,mousePos.y,this.x,this.y,this.width,this.height)){
+            return this.room;
+        }
+        return false;
+    }
+
+    drawText(){
+        ctx.font = "10px Arial";
+        ctx.fillText(this.room.name, 620, this.y + 10);
     }
 }

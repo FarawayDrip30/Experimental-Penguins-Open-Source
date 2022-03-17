@@ -12,6 +12,9 @@ penguinSS.src = "Assets/Sprites/Penguin/spritesheet.png";
 var circleImg = new Image();
 circleImg.src = "Assets/Sprites/circle.png";
 
+var selectedImg = createImage("Assets/Sprites/Selected.png");
+var notSelectedImg = createImage("Assets/Sprites/SelectedNot.png");
+
 var idleAnims = [
 //var animations_north_idle = 
 [[0],[0]],
@@ -49,6 +52,13 @@ var walkAnims = [
 //var animations_northWest_walk = 
 [[5,5,5,5,5,5,5,5],[13,12,11,10,9,8,7,6]]
 ];
+
+var snowRoom = new Room(createImage("Assets/Sprites/snowRoom.png"),[],720,420,1,1,canvas.width/2,canvas.height/2, "Snow Room");
+
+let northPoleSprite = new Sprite(createImage("Assets/Sprites/north pole.png"),0,0,61,149,420,150,20,50,0,0);
+var northPole = new Room(createImage("Assets/Sprites/snowRoom.png"),[northPoleSprite],720,420,1,1,canvas.width/2,canvas.height/2, "North Pole");
+
+var crashSite = new Room(createImage("Assets/Sprites/crashSite.png"),[],629,422,1799,1201,canvas.width/2,canvas.height/2, "Crash Site")
 
 function main(){
     getFPS();

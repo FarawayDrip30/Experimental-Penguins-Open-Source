@@ -56,6 +56,11 @@ class MenuState extends State{
 class PlayState extends State{
     constructor(){
         super();
+
+        this.roomButtons = [new RoomButton(snowRoom,20),new RoomButton(northPole,35),new RoomButton(crashSite,50)];
+        this.roomButtons[0].img = selectedImg;
+        
+        this.currentRoom = snowRoom;
         
         this.playerSelected = false;
         this.player = new Penguin(100,100,"Player");
@@ -71,15 +76,32 @@ class PlayState extends State{
             }
         },50)
     }
+    changeRoom(tempRoom){
+        if(this.currentRoom != tempRoom){
+            this.currentRoom = tempRoom;
+            this.player.x = tempRoom.spawnX;
+            this.player.y = tempRoom.spawnY;
+            console.log("AAAAAAA");
+            return true;
+        }
+        return false;
+    }
     main(){
         this.player.main();
     }
     render(){
         clearScreen();
+        this.currentRoom.draw();
         if(this.playerSelected){
             ctx.drawImage(circleImg,0,0,49,34,this.player.x + this.player.circleOX,this.player.y + this.player.circleOY,54,37);
         }
         this.player.draw();
+        this.currentRoom.drawObjects();
+
+        this.roomButtons.forEach(button => {
+            button.draw();
+            button.drawText();
+        });
     }
     onClick(evt){
         let mousePos = getMousePos(canvas, evt);
@@ -93,6 +115,18 @@ class PlayState extends State{
                 document.getElementById("EpicoCanvas").style.cursor = "default";
             }
         }
+        this.roomButtons.forEach(button => {
+            let tempRoom = button.isClicked(mousePos);
+            if(tempRoom != false){
+                if(currentState.changeRoom(button.room) != false){
+                    currentState.roomButtons.forEach(button => {
+                        button.img = notSelectedImg;
+                    })
+                    button.img = selectedImg;
+                    return;
+                }
+            }
+        })
     }
 
     onMouseMove(evt){
