@@ -107,7 +107,7 @@ class PlayState extends State{
         if(this.playerSelected){
             let dx = mousePos.x - this.player.x;
             let dy = mousePos.y - this.player.y;
-            let angle = Math.atan2(dy, dx)
+            let angle = Math.atan2(dy, dx);
             this.player.lookAtDest(angle);
         }
     }
