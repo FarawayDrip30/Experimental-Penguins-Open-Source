@@ -151,10 +151,11 @@ class Penguin extends Sprite{
 }
 
 class Room extends Sprite{
-    constructor(img,objects,width,height,swidth,sheight,spawnX,spawnY,name){
+    constructor(img,objects,bgobjects,width,height,swidth,sheight,spawnX,spawnY,name){
         super(img,0,0,swidth,sheight,0,0,width,height,0,0);
 
         this.objects = objects;
+        this.bgobjects = bgobjects;
 
         this.name = name;
 
@@ -164,7 +165,13 @@ class Room extends Sprite{
 
     drawObjects(){
         for(let i = 0; i < this.objects.length; i++){
-            this.objects[0].draw();
+            this.objects[i].draw();
+        }
+    }
+
+    drawBGObjects(){
+        for(let i = 0; i < this.bgobjects.length; i++){
+            this.bgobjects[i].draw();
         }
     }
 }

@@ -81,7 +81,6 @@ class PlayState extends State{
             this.currentRoom = tempRoom;
             this.player.x = tempRoom.spawnX;
             this.player.y = tempRoom.spawnY;
-            console.log("AAAAAAA");
             return true;
         }
         return false;
@@ -91,11 +90,15 @@ class PlayState extends State{
     }
     render(){
         clearScreen();
+        
         this.currentRoom.draw();
+
+        this.currentRoom.drawBGObjects();
         if(this.playerSelected){
             ctx.drawImage(circleImg,0,0,49,34,this.player.x + this.player.circleOX,this.player.y + this.player.circleOY,54,37);
         }
         this.player.draw();
+
         this.currentRoom.drawObjects();
 
         this.roomButtons.forEach(button => {
