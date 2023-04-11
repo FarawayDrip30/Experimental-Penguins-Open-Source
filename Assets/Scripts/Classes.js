@@ -42,7 +42,7 @@ class Penguin extends Sprite{
     constructor(x,y,name){
         super(penguinSS,0,0,48,48,x,y,50,50,-20,-25);
 
-        this.changeSprite(idleAnims[4],0);
+        this.changeFrame(idleAnims[4],0);
 
         this.speed = 3;
 
@@ -59,11 +59,19 @@ class Penguin extends Sprite{
 
         this.circleOX = -27;
         this.circleOY = -15;
+
+        this.animationInterval = null;
     }
 
-    changeSprite(animation,index){
-        this.sx = animation[1][index] * 50;
-        this.sy = animation[0][index] * 50;
+    changeFrame(animation,frame){
+        if(animation[frame].sx != null){
+            this.sx = animation[frame].sx * 50;
+        }
+        if(animation[frame].sy != null){
+            this.sy = animation[frame].sy * 50;
+        }
+
+        console.log(animation)
     }
 
     move(mousePos){
@@ -81,40 +89,52 @@ class Penguin extends Sprite{
 
         this.lookAtDest(angle);
 
+        this.frame = 0;
+        this.animationInterval = setInterval(() => {
+            if(currentState.player.moving){
+                currentState.player.changeFrame(walkAnims[currentState.player.direction],currentState.player.frame);
+
+                currentState.player.frame += 1;
+                if(currentState.player.frame >= walkAnims[currentState.player.direction].length){
+                    currentState.player.frame = 0;
+                }
+            }
+        },50)
+
         this.moving = true;
 	}
 
     lookAtDest(angle){
         if(angle < -1.125 && angle > -1.875){ //North
-            this.changeSprite(idleAnims[0],0);
+            this.changeFrame(idleAnims[0],0);
             this.direction = 0;
         }
         else if(angle < -0.375 && angle > -1.125){ //North-East
-            this.changeSprite(idleAnims[1],0);
+            this.changeFrame(idleAnims[1],0);
             this.direction = 1;
         }
         else if(angle < 0.375 && angle > -0.375){ //East
-            this.changeSprite(idleAnims[2],0);
+            this.changeFrame(idleAnims[2],0);
             this.direction = 2;
         }
         else if(angle < 1.125 && angle > 0.375){ //South-East
-            this.changeSprite(idleAnims[3],0);
+            this.changeFrame(idleAnims[3],0);
             this.direction = 3;
         }
         else if(angle < 1.875 && angle > 1.125){ //South
-            this.changeSprite(idleAnims[4],0);
+            this.changeFrame(idleAnims[4],0);
             this.direction = 4;
         }
         else if(angle < 2.625 && angle > 1.875){ //South-West
-            this.changeSprite(idleAnims[5],0);
+            this.changeFrame(idleAnims[5],0);
             this.direction = 5;
         }
         else if(angle > 2.625 && angle > -1.875){ //West
-            this.changeSprite(idleAnims[6],0);
+            this.changeFrame(idleAnims[6],0);
             this.direction = 6;
         }
         else if(angle < -1.875 && angle > -2.625){ //North-West
-            this.changeSprite(idleAnims[7],0);
+            this.changeFrame(idleAnims[7],0);
             this.direction = 7;
         }
         
@@ -134,7 +154,7 @@ class Penguin extends Sprite{
         if(this.moving){
             if(this.y + this.velY * timeScale < this.destination.y != this.above || 
             this.x + this.velX * timeScale < this.destination.x != this.leftTo){
-                this.changeSprite(idleAnims[this.direction],0);
+                this.changeFrame(idleAnims[this.direction],0);
 
                 this.velX = 0;
                 this.velY = 0;
@@ -142,6 +162,9 @@ class Penguin extends Sprite{
                 this.y = this.destination.y;
                 this.moving = false;
                 this.frame = 0;
+
+                clearInterval(this.animationInterval)
+                this.animationInterval = null
             }
         }
 

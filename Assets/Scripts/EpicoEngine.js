@@ -19,40 +19,40 @@ var notSelectedImg = createImage("Assets/Sprites/SelectedNot.png");
 
 var idleAnims = [
 //var animations_north_idle = 
-[[0],[0]],
+[{sx: 0, sy: 0}],
 //var animations_northEast_idle = 
-[[0],[1]],
+[{sx: 1, sy: 0}],
 //var animations_east_idle = 
-[[0],[2]],
+[{sx: 2, sy: 0}],
 //var animations_southEast_idle = 
-[[0],[3]],
+[{sx: 3, sy: 0}],
 //var animations_south_idle = 
-[[0],[4]],
+[{sx: 4, sy: 0}],
 //var animations_southWest_idle = 
-[[4],[10]],
+[{sx: 10, sy: 4}],
 //var animations_west_idle = 
-[[4],[11]],
+[{sx: 11, sy: 4}],
 //var animations_northWest_idle = 
-[[4],[12]]
+[{sx: 12, sy: 4}]
 ];
 
 var walkAnims = [
 //var animations_north_walk = 
-[[0,0,0,0,0,0,0,0],[5,6,7,8,9,10,11,12]],
+[{sx: 5, sy: 0},{sx: 6},{sx: 7},{sx: 8},{sx: 9},{sx: 10},{sx: 11},{sx: 12}],
 //var animations_northEast_walk = 
-[[1,1,1,1,1,1,1,1],[0,1,2,3,4,5,6,7]],
+[{sx: 0, sy: 1},{sx: 2},{sx: 3},{sx: 4},{sx: 5},{sx: 6},{sx: 7},{sx: 8}],
 //var animations_east_walk = 
-[[1,1,1,1,1,2,2,2],[9,10,11,12,13,0,1,2]],
+[{sx: 9, sy: 1},{sx: 10},{sx: 11},{sx: 12},{sx: 13},{sx: 0, sy: 2},{sx: 1},{sx: 2}],
 //var animations_southEast_walk = 
-[[2,2,2,2,2,2,2,2],[4,5,6,7,8,9,10,11]],
+[{sx: 4, sy: 2},{sx: 5},{sx: 6},{sx: 7},{sx: 8},{sx: 9},{sx: 10},{sx: 11}],
 //var animations_south_walk = 
-[[2,3,3,3,3,3,3,3,3],[13,0,1,2,3,4,5]],
+[{sx: 13, sy: 2},{sx: 0, sy: 3},{sx: 1},{sx: 2},{sx: 3},{sx: 4},{sx: 5}],
 //var animations_southWest_walk = 
-[[6,6,6,6,6,6,6,6],[9,8,7,6,5,4,3,2]],
+[{sx: 9, sy: 6},{sx: 8},{sx: 7},{sx: 6},{sx: 5},{sx: 4},{sx: 3},{sx: 2}],
 //var animations_west_walk = 
-[[5,5,5,5,5,6,6,6],[4,3,2,1,0,13,12,11]],
+[{sx: 4, sy: 5},{sx: 3},{sx: 2},{sx: 1},{sx: 0},{sx: 13, sy: 6},{sx: 12},{sx: 11}],
 //var animations_northWest_walk = 
-[[5,5,5,5,5,5,5,5],[13,12,11,10,9,8,7,6]]
+[{sx: 13, sy: 5},{sx: 12},{sx: 11},{sx: 10},{sx: 9},{sx: 8},{sx: 7},{sx: 6}],
 ];
 
 var snowRoom = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[],720,420,1,1,"Snow Room");

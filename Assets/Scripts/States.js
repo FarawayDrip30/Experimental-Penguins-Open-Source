@@ -64,17 +64,6 @@ class PlayState extends State{
         
         this.playerSelected = false;
         this.player = new Penguin(100,100,"Player");
-
-        this.animationInterval = setInterval(() => {
-            if(currentState.player.moving){
-                currentState.player.changeSprite(walkAnims[currentState.player.direction],currentState.player.frame);
-
-                currentState.player.frame += 1;
-                if(currentState.player.frame >= walkAnims[currentState.player.direction][1].length){
-                    currentState.player.frame = 0;
-                }
-            }
-        },50)
     }
     changeRoom(tempRoom){
         if(this.currentRoom != tempRoom){
