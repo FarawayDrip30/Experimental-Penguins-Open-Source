@@ -34,6 +34,11 @@ class Sprite{
 
     draw(){
         ctx.drawImage(this.img,this.sx,this.sy,this.swidth,this.sheight,this.x + this.originX,this.y + this.originY,this.width,this.height)
+        this.drawMore()
+    }
+
+    drawMore(){
+
     }
 }
 
@@ -43,6 +48,10 @@ class Penguin extends Sprite{
         super(penguinSS,0,0,48,48,x,y,50,50,-20,-25);
 
         this.changeFrame(idleAnims[4],0);
+
+        this.name = name;
+        this.speech = "";
+        this.speechTimeout = null;
 
         this.speed = 3;
 
@@ -63,12 +72,43 @@ class Penguin extends Sprite{
         this.animationInterval = null;
     }
 
+    drawMore(){
+        ctx.fillStyle = "black";
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(this.name,this.x,this.y + 35)
+
+        if(this.speech != ""){
+            ctx.fillStyle = "blue";
+            ctx.font = "14px Arial";
+            ctx.fillText(this.speech,this.x,this.y - 35)
+        }
+    }
+
+    speak(message){
+        clearTimeout(this.speechTimeout);
+        this.speech = message;
+        this.speechTimeout = setTimeout(this.unspeak.bind(this),5000);
+    }
+    unspeak(){
+        this.speech = "";
+    }
+
     changeFrame(animation,frame){
+        //Crop X and Y
         if(animation[frame].sx != null){
             this.sx = animation[frame].sx * 50;
         }
         if(animation[frame].sy != null){
             this.sy = animation[frame].sy * 50;
+        }
+
+        //Position X and Y
+        if(animation[frame].x != null){
+            this.originX = animation[frame].x;
+        }
+        if(animation[frame].y != null){
+            this.originY = animation[frame].y;
         }
     }
 
@@ -97,7 +137,7 @@ class Penguin extends Sprite{
                     currentState.player.frame = 0;
                 }
             }
-        },50)
+        },60)
 
         this.moving = true;
 	}
@@ -222,7 +262,9 @@ class RoomButton extends Sprite{
     }
 
     drawText(){
+        ctx.fillStyle = "black";
         ctx.font = "10px Arial";
+        ctx.textAlign = "left";
         ctx.fillText(this.room.name, 620, this.y + 10);
     }
 }

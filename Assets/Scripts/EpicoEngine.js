@@ -4,6 +4,9 @@ var ctx = canvas.getContext("2d");
 canvas.addEventListener("click", onClick);
 canvas.addEventListener("mousemove", onMouseMove);
 
+var exHUD = document.getElementById("exHUD")
+var chatbox = document.getElementById("chatbox")
+
 const screenCentre = {x: canvas.width/2, y: canvas.height/2}
 
 var currentState = new MenuState();
@@ -19,28 +22,28 @@ var notSelectedImg = createImage("Assets/Sprites/SelectedNot.png");
 
 var idleAnims = [
 //var animations_north_idle = 
-[{sx: 0, sy: 0}],
+[{sx: 0, sy: 0, x: -20, y: -25}],
 //var animations_northEast_idle = 
-[{sx: 1, sy: 0}],
+[{sx: 1, sy: 0, x: -17, y: -25}],
 //var animations_east_idle = 
-[{sx: 2, sy: 0}],
+[{sx: 2, sy: 0, x: -15, y: -25}],
 //var animations_southEast_idle = 
-[{sx: 3, sy: 0}],
+[{sx: 3, sy: 0, x: -17, y: -25}],
 //var animations_south_idle = 
-[{sx: 4, sy: 0}],
+[{sx: 4, sy: 0, x: -20, y: -25}],
 //var animations_southWest_idle = 
-[{sx: 10, sy: 4}],
+[{sx: 10, sy: 4, x: -24, y: -25}],
 //var animations_west_idle = 
-[{sx: 11, sy: 4}],
+[{sx: 11, sy: 4, x: -27, y: -25}],
 //var animations_northWest_idle = 
-[{sx: 12, sy: 4}]
+[{sx: 12, sy: 4, x: -24, y: -25}]
 ];
 
 var walkAnims = [
 //var animations_north_walk = 
 [{sx: 5, sy: 0},{sx: 6},{sx: 7},{sx: 8},{sx: 9},{sx: 10},{sx: 11},{sx: 12}],
 //var animations_northEast_walk = 
-[{sx: 0, sy: 1},{sx: 2},{sx: 3},{sx: 4},{sx: 5},{sx: 6},{sx: 7},{sx: 8}],
+[{sx: 0, sy: 1},{sx: 1},{sx: 2},{sx: 3},{sx: 4},{sx: 5},{sx: 6},{sx: 7}],
 //var animations_east_walk = 
 [{sx: 9, sy: 1},{sx: 10},{sx: 11},{sx: 12},{sx: 13},{sx: 0, sy: 2},{sx: 1},{sx: 2}],
 //var animations_southEast_walk = 
@@ -85,6 +88,10 @@ function onClick(evt){
 }
 function onMouseMove(evt){
     currentState.onMouseMove(evt);
+}
+function onSend(){
+    currentState.onSend(chatbox.value);
+    chatbox.value = ""
 }
 
 main()

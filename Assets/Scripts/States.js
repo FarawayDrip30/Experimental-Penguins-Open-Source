@@ -29,6 +29,9 @@ class State{
     onMouseWheel(evt){
         
     }
+    onSend(message){
+
+    }
     end(){
 
     }
@@ -48,6 +51,7 @@ class MenuState extends State{
     onClick(evt){
         let mousePos = getMousePos(canvas,evt);
         if(isInRect(mousePos.x,mousePos.y,this.playButton.x,this.playButton.y,this.playButton.width,this.playButton.height)){
+            exHUD.hidden = false;
             changeState(new PlayState());
         }
     }
@@ -147,5 +151,9 @@ class PlayState extends State{
             }
         });
     
+    }
+
+    onSend(message){
+        this.player.speak(message);
     }
 }
