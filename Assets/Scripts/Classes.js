@@ -70,8 +70,6 @@ class Penguin extends Sprite{
         if(animation[frame].sy != null){
             this.sy = animation[frame].sy * 50;
         }
-
-        console.log(animation)
     }
 
     move(mousePos){
