@@ -49,7 +49,7 @@ class Penguin extends Sprite{
         this.velX = 0;
         this.velY = 0;
 
-        this.destination = {x:0,y:0};
+        this.destination = {x:x,y:y};
         this.above = false;
         this.leftTo = false;
 
@@ -151,7 +151,7 @@ class Penguin extends Sprite{
 }
 
 class Room extends Sprite{
-    constructor(img,objects,bgobjects,width,height,swidth,sheight,spawnX,spawnY,name){
+    constructor(img,objects,bgobjects,width,height,swidth,sheight,name,animation){
         super(img,0,0,swidth,sheight,0,0,width,height,0,0);
 
         this.objects = objects;
@@ -159,8 +159,19 @@ class Room extends Sprite{
 
         this.name = name;
 
-        this.spawnX = spawnX;
-        this.spawnY = spawnY;
+        this.animation = animation;
+        this.animationInterval = null;
+    }
+
+    enter(){
+        if(this.animation != null){
+            this.animationInterval = setInterval(this.animation,100)
+        }
+    }
+
+    exit(){
+        clearInterval(this.animationInterval);
+        this.animationInterval = null;
     }
 
     drawObjects(){

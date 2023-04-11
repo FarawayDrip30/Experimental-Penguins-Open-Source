@@ -4,6 +4,8 @@ var ctx = canvas.getContext("2d");
 canvas.addEventListener("click", onClick);
 canvas.addEventListener("mousemove", onMouseMove);
 
+const screenCentre = {x: canvas.width/2, y: canvas.height/2}
+
 var currentState = new MenuState();
 
 var penguinSS = new Image();
@@ -53,12 +55,21 @@ var walkAnims = [
 [[5,5,5,5,5,5,5,5],[13,12,11,10,9,8,7,6]]
 ];
 
-var snowRoom = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[],720,420,1,1,canvas.width/2,canvas.height/2, "Snow Room");
+var snowRoom = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[],720,420,1,1,"Snow Room");
 
 let northPoleSprite = new Sprite(createImage("Assets/Sprites/north pole.png"),0,0,61,149,420,150,20,50,0,0);
-var northPole = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[northPoleSprite],720,420,1,1,canvas.width/2,canvas.height/2, "North Pole");
+var northPole = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[northPoleSprite],720,420,1,1,"North Pole");
 
-var crashSite = new Room(createImage("Assets/Sprites/crashSite.png"),[],[],629,422,1799,1201,canvas.width/2,canvas.height/2, "Crash Site")
+var crashSiteWave = 0
+function animateCrashSite(){
+    currentState.currentRoom.bgobjects[0].y = 300+(Math.sin(crashSiteWave)*5)
+    crashSiteWave += 0.1
+    if(crashSiteWave == 1){crashSiteWave = 0}
+}
+
+var crashSiteOverlay = new Sprite(createImage("Assets/Sprites/crashSiteOverlay.png"),0,0,1799,1201,-2,-5,629,422,0,0);
+var crashSiteWater = new Sprite(createImage("Assets/Sprites/crashSiteWater.png"),0,0,529,354,0,296,185,124,0,0);
+var crashSite = new Room(createImage("Assets/Sprites/crashSite.png"),[crashSiteOverlay],[crashSiteWater],629,422,1799,1201,"Crash Site",animateCrashSite);
 
 function main(){
     getFPS();

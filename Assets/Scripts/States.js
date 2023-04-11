@@ -78,9 +78,11 @@ class PlayState extends State{
     }
     changeRoom(tempRoom){
         if(this.currentRoom != tempRoom){
+            this.currentRoom.exit();
             this.currentRoom = tempRoom;
-            this.player.x = tempRoom.spawnX;
-            this.player.y = tempRoom.spawnY;
+            this.currentRoom.enter();
+            this.player.x = this.player.destination.x;
+            this.player.y = this.player.destination.y;
             return true;
         }
         return false;
@@ -117,19 +119,21 @@ class PlayState extends State{
                 this.playerSelected = false;
                 document.getElementById("EpicoCanvas").style.cursor = "default";
             }
-        }
-        this.roomButtons.forEach(button => {
-            let tempRoom = button.isClicked(mousePos);
-            if(tempRoom != false){
-                if(currentState.changeRoom(button.room) != false){
-                    currentState.roomButtons.forEach(button => {
-                        button.img = notSelectedImg;
-                    })
-                    button.img = selectedImg;
-                    return;
-                }
+            else{
+                this.roomButtons.forEach(button => {
+                    let tempRoom = button.isClicked(mousePos);
+                    if(tempRoom){
+                        if(currentState.changeRoom(button.room)){
+                            currentState.roomButtons.forEach(button => {
+                                button.img = notSelectedImg;
+                            })
+                            button.img = selectedImg;
+                            return;
+                        }
+                    }
+                })
             }
-        })
+        }
     }
 
     onMouseMove(evt){
