@@ -4,6 +4,8 @@ var ctx = canvas.getContext("2d");
 canvas.addEventListener("click", onClick);
 canvas.addEventListener("mousemove", onMouseMove);
 
+var musicPlayer = document.getElementById("musicPlayer");
+
 var exHUD = document.getElementById("exHUD")
 var chatbox = document.getElementById("chatbox")
 
@@ -58,7 +60,8 @@ var walkAnims = [
 [{sx: 13, sy: 5},{sx: 12},{sx: 11},{sx: 10},{sx: 9},{sx: 8},{sx: 7},{sx: 6}],
 ];
 
-var snowRoom = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[],720,420,1,1,"Snow Room");
+var snowRoomImg = createImage("Assets/Sprites/snowRoom.png")
+var snowRoom = new Room(snowRoomImg,[],[],720,420,1,1,"Snow Room");
 
 let northPoleSprite = new Sprite(createImage("Assets/Sprites/north pole.png"),0,0,61,149,420,150,20,50,0,0);
 var northPole = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[northPoleSprite],720,420,1,1,"North Pole");
@@ -70,9 +73,27 @@ function animateCrashSite(){
     if(crashSiteWave == 1){crashSiteWave = 0}
 }
 
+function startMusic(){
+    musicPlayer.play()
+}
+function stopMusic(){
+    musicPlayer.pause();
+    musicPlayer.currentTime = 0;
+}
+
 var crashSiteOverlay = new Sprite(createImage("Assets/Sprites/crashSiteOverlay.png"),0,0,1799,1201,-2,-5,629,422,0,0);
 var crashSiteWater = new Sprite(createImage("Assets/Sprites/crashSiteWater.png"),0,0,529,354,0,296,185,124,0,0);
-var crashSite = new Room(createImage("Assets/Sprites/crashSite.png"),[crashSiteOverlay],[crashSiteWater],629,422,1799,1201,"Crash Site",animateCrashSite);
+var crashSite = new Room(createImage("Assets/Sprites/crashSite.png"),[crashSiteOverlay],[crashSiteWater],629,422,1799,1201,"Crash Site"/*,animateCrashSite*/);
+
+var igloo = new Sprite(createImage("Assets/Sprites/pchat2/igloo.png"),0,0,163,152,475,50,80,75,0,0);
+var signpost = new Sprite(createImage("Assets/Sprites/pchat2/signpost.png"),0,0,120,119,600,200,70,70,0,0);
+var iglooRoom = new Room(snowRoomImg,[],[igloo,signpost],720,420,1,1,"Igloo Room");
+
+var iglooBackground = new Sprite(createImage("Assets/Sprites/pchat2/iglooBackground.png"),0,0,4471,3671,0,0,720,420,0,0);
+var iglooInterior = new Room(snowRoomImg,[],[iglooBackground],720,420,1,1,"Igloo Interior",[startMusic],[stopMusic]);
+
+var signpost2 = new Sprite(createImage("Assets/Sprites/pchat2/signpost2.png"),0,0,120,119,20,300,70,70,0,0);
+var iglooGarden = new Room(snowRoomImg,[],[signpost2],720,420,1,1,"Igloo Garden");
 
 function main(){
     getFPS();
@@ -92,6 +113,10 @@ function onMouseMove(evt){
 function onSend(){
     currentState.onSend(chatbox.value);
     chatbox.value = ""
+}
+
+function messUpCorrection(){
+    currentState.messUpCorrection()
 }
 
 main()

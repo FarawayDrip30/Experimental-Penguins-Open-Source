@@ -43,6 +43,7 @@ function getFPS() {
 		}
 		else{
 			console.log("FPS Got Messed Up.")
+			messUpCorrection()
 		}
 	}
 	lastCalledTime = Date.now();

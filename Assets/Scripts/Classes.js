@@ -212,7 +212,7 @@ class Penguin extends Sprite{
 }
 
 class Room extends Sprite{
-    constructor(img,objects,bgobjects,width,height,swidth,sheight,name,animation){
+    constructor(img,objects,bgobjects,width,height,swidth,sheight,name,enterFunctions,exitFunctions){
         super(img,0,0,swidth,sheight,0,0,width,height,0,0);
 
         this.objects = objects;
@@ -220,19 +220,29 @@ class Room extends Sprite{
 
         this.name = name;
 
-        this.animation = animation;
-        this.animationInterval = null;
+        this.enterFunctions = enterFunctions;
+        this.exitFunctions = exitFunctions;
     }
 
     enter(){
-        if(this.animation != null){
-            this.animationInterval = setInterval(this.animation,100)
+        if(this.enterFunctions){
+            this.enterFunctions.forEach(func => {
+                func();
+            });
         }
+        //if(this.animation != null){
+        //    this.animationInterval = setInterval(this.animation,100)
+        //}
     }
 
     exit(){
-        clearInterval(this.animationInterval);
-        this.animationInterval = null;
+        if(this.exitFunctions){
+            this.exitFunctions.forEach(func => {
+                func();
+            });
+        }
+        //clearInterval(this.animationInterval);
+        //this.animationInterval = null;
     }
 
     drawObjects(){

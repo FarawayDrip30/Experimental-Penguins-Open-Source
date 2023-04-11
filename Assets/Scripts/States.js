@@ -35,6 +35,8 @@ class State{
     end(){
 
     }
+
+    messUpCorrection(){}
 }
 
 class MenuState extends State{
@@ -61,7 +63,7 @@ class PlayState extends State{
     constructor(){
         super();
 
-        this.roomButtons = [new RoomButton(snowRoom,20),new RoomButton(northPole,35),new RoomButton(crashSite,50)];
+        this.roomButtons = [new RoomButton(snowRoom,20),new RoomButton(northPole,35),new RoomButton(crashSite,50), new RoomButton(iglooRoom,65), new RoomButton(iglooInterior,80), new RoomButton(iglooGarden,95)];
         this.roomButtons[0].img = selectedImg;
 
         this.currentRoom = snowRoom;
@@ -155,5 +157,10 @@ class PlayState extends State{
 
     onSend(message){
         this.player.speak(message);
+    }
+
+    messUpCorrection(){
+        this.player.x = this.player.destination.x
+        this.player.y = this.player.destination.y
     }
 }
