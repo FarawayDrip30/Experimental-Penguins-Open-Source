@@ -67,6 +67,12 @@ let northPoleSprite = new Sprite(createImage("Assets/Sprites/north pole.png"),0,
 var northPole = new Room(createImage("Assets/Sprites/snowRoom.png"),[],[northPoleSprite],720,420,1,1,"North Pole");
 
 var crashSiteWave = 0
+function startWaveAnimation(){
+    currentState.currentRoom.animationInterval = setInterval(animateCrashSite,100);
+}
+function endWaveAnimation(){
+    clearInterval(currentState.currentRoom.animationInterval);
+}
 function animateCrashSite(){
     currentState.currentRoom.bgobjects[0].y = 300+(Math.sin(crashSiteWave)*5)
     crashSiteWave += 0.1
@@ -83,7 +89,7 @@ function stopMusic(){
 
 var crashSiteOverlay = new Sprite(createImage("Assets/Sprites/crashSiteOverlay.png"),0,0,1799,1201,-2,-5,629,422,0,0);
 var crashSiteWater = new Sprite(createImage("Assets/Sprites/crashSiteWater.png"),0,0,529,354,0,296,185,124,0,0);
-var crashSite = new Room(createImage("Assets/Sprites/crashSite.png"),[crashSiteOverlay],[crashSiteWater],629,422,1799,1201,"Crash Site"/*,animateCrashSite*/);
+var crashSite = new Room(createImage("Assets/Sprites/crashSite.png"),[crashSiteOverlay],[crashSiteWater],629,422,1799,1201,"Crash Site",[startWaveAnimation],[endWaveAnimation]);
 
 var igloo = new Sprite(createImage("Assets/Sprites/pchat2/igloo.png"),0,0,163,152,475,50,80,75,0,0);
 var signpost = new Sprite(createImage("Assets/Sprites/pchat2/signpost.png"),0,0,120,119,600,200,70,70,0,0);
