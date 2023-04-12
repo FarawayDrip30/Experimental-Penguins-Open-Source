@@ -14,6 +14,9 @@ class State{
     render(){
 
     }
+    renderMore(){
+
+    }
     onClick(evt){
 
     }
@@ -35,8 +38,6 @@ class State{
     end(){
 
     }
-
-    messUpCorrection(){}
 }
 
 class MenuState extends State{
@@ -63,7 +64,11 @@ class PlayState extends State{
     constructor(){
         super();
 
-        this.roomButtons = [new RoomButton(snowRoom,20),new RoomButton(northPole,35),new RoomButton(crashSite,50), new RoomButton(iglooRoom,65), new RoomButton(iglooInterior,80), new RoomButton(iglooGarden,95)];
+        this.rooms = [snowRoom,northPole,crashSite,iglooRoom,iglooInterior,iglooGarden];
+        this.roomButtons = [];
+        for(let i = 0; i < this.rooms.length; i++){
+            this.roomButtons.push(new RoomButton(this.rooms[i],20+i*15))
+        }
         this.roomButtons[0].img = selectedImg;
 
         this.currentRoom = snowRoom;
@@ -71,10 +76,15 @@ class PlayState extends State{
         this.playerSelected = false;
         this.player = new Penguin(100,100,"Player");
     }
-    changeRoom(tempRoom){
-        if(this.currentRoom != tempRoom){
+    changeRoom(roomID){
+        if(this.currentRoom != this.rooms[roomID]){
+            currentState.roomButtons.forEach(button => {
+                button.img = notSelectedImg;
+            })
+            this.roomButtons[roomID].img = selectedImg;
+
             this.currentRoom.exit();
-            this.currentRoom = tempRoom;
+            this.currentRoom = this.rooms[roomID];
             this.currentRoom.enter();
             this.player.x = this.player.destination.x;
             this.player.y = this.player.destination.y;
@@ -115,18 +125,14 @@ class PlayState extends State{
                 document.getElementById("EpicoCanvas").style.cursor = "default";
             }
             else{
-                this.roomButtons.forEach(button => {
-                    let tempRoom = button.isClicked(mousePos);
-                    if(tempRoom){
-                        if(currentState.changeRoom(button.room)){
-                            currentState.roomButtons.forEach(button => {
-                                button.img = notSelectedImg;
-                            })
-                            button.img = selectedImg;
+                for(let i = 0; i < this.rooms.length; i++){
+                    let isClicked = this.roomButtons[i].isClicked(mousePos);
+                    if(isClicked){
+                        if(currentState.changeRoom(i)){
                             return;
                         }
                     }
-                })
+                }
             }
         }
     }
@@ -158,9 +164,30 @@ class PlayState extends State{
     onSend(message){
         this.player.speak(message);
     }
+}
 
-    messUpCorrection(){
-        this.player.x = this.player.destination.x
-        this.player.y = this.player.destination.y
+class WorldEditState extends PlayState{
+    constructor(){
+        super();
+
+        this.debugSquare = new Shape(0,0,0,0,"red",0,0)
+    }
+
+    renderMore(){
+        this.debugSquare.draw()
+    }
+
+    onMouseDown(evt){
+        let mousePos = getMousePos(canvas,evt);
+        this.debugSquare.x = mousePos.x;
+        this.debugSquare.y = mousePos.y;
+
+        console.log("x: " + this.debugSquare.x + ", y: " + this.debugSquare.y + ", width: " + this.debugSquare.width + ", height: " + this.debugSquare.height)
+    }
+
+    onMouseMove(evt){
+        let mousePos = getMousePos(canvas,evt);
+        this.debugSquare.width = mousePos.x;
+        this.debugSquare.height = mousePos.y;
     }
 }

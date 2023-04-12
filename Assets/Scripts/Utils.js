@@ -38,12 +38,12 @@ function getFPS() {
 	if (lastCalledTime) {
 		delta = (Date.now() - lastCalledTime)/1000;
 		let fps = 1/delta;
-		if(fps > 10 && fps != null && fps != NaN){
+		if(fps > 10 && fps != null && fps != NaN && fps/90 != NaN){
 			timeScale = fps/90;
 		}
 		else{
+			timeScale = 0
 			console.log("FPS Got Messed Up.")
-			messUpCorrection()
 		}
 	}
 	lastCalledTime = Date.now();

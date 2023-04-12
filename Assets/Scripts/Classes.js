@@ -124,6 +124,10 @@ class Penguin extends Sprite{
 
         this.velX = this.speed * Math.cos(angle);
         this.velY = this.speed * Math.sin(angle);
+        if(this.velX == NaN || this.angle == NaN){
+            console.log(this.speed);
+            console.log(angle);
+        }
 
         this.lookAtDest(angle);
 
@@ -144,38 +148,32 @@ class Penguin extends Sprite{
 
     lookAtDest(angle){
         if(angle < -1.125 && angle > -1.875){ //North
-            this.changeFrame(idleAnims[0],0);
             this.direction = 0;
         }
         else if(angle < -0.375 && angle > -1.125){ //North-East
-            this.changeFrame(idleAnims[1],0);
             this.direction = 1;
         }
         else if(angle < 0.375 && angle > -0.375){ //East
-            this.changeFrame(idleAnims[2],0);
             this.direction = 2;
         }
         else if(angle < 1.125 && angle > 0.375){ //South-East
-            this.changeFrame(idleAnims[3],0);
             this.direction = 3;
         }
         else if(angle < 1.875 && angle > 1.125){ //South
-            this.changeFrame(idleAnims[4],0);
             this.direction = 4;
         }
         else if(angle < 2.625 && angle > 1.875){ //South-West
-            this.changeFrame(idleAnims[5],0);
             this.direction = 5;
         }
         else if(angle > 2.625 && angle > -1.875){ //West
-            this.changeFrame(idleAnims[6],0);
             this.direction = 6;
         }
         else if(angle < -1.875 && angle > -2.625){ //North-West
-            this.changeFrame(idleAnims[7],0);
             this.direction = 7;
         }
         
+        this.changeFrame(idleAnims[this.direction],0);
+
         /*
         north = -1.875 / -1.125
         northeast = -1.125 / -0.375
@@ -203,16 +201,21 @@ class Penguin extends Sprite{
 
                 clearInterval(this.animationInterval)
                 this.animationInterval = null
+
+                currentState.currentRoom.checkTriggers(this);
             }
         }
 
         this.x += this.velX * timeScale;
         this.y += this.velY * timeScale;
+        if(this.x == NaN){
+            console.log(timeScale)
+        }
     }
 }
 
 class Room extends Sprite{
-    constructor(img,objects,bgobjects,width,height,swidth,sheight,name,enterFunctions,exitFunctions){
+    constructor(img,objects,bgobjects,width,height,swidth,sheight,name,enterFunctions,exitFunctions,triggers){
         super(img,0,0,swidth,sheight,0,0,width,height,0,0);
 
         this.objects = objects;
@@ -222,6 +225,8 @@ class Room extends Sprite{
 
         this.enterFunctions = enterFunctions;
         this.exitFunctions = exitFunctions;
+
+        this.triggers = triggers;
     }
 
     enter(){
@@ -230,9 +235,6 @@ class Room extends Sprite{
                 func();
             });
         }
-        //if(this.animation != null){
-        //    this.animationInterval = setInterval(this.animation,100)
-        //}
     }
 
     exit(){
@@ -241,8 +243,14 @@ class Room extends Sprite{
                 func();
             });
         }
-        //clearInterval(this.animationInterval);
-        //this.animationInterval = null;
+    }
+
+    checkTriggers(obj){
+        if(this.triggers){
+            this.triggers.forEach(trigger => {
+                trigger.isInTrigger(obj);
+            })
+        }
     }
 
     drawObjects(){
@@ -254,6 +262,24 @@ class Room extends Sprite{
     drawBGObjects(){
         for(let i = 0; i < this.bgobjects.length; i++){
             this.bgobjects[i].draw();
+        }
+    }
+}
+
+class Trigger{
+    constructor(x,y,width,height,func,param){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+
+        this.func = func;
+        this.param = param;
+    }
+
+    isInTrigger(obj){
+        if(isInRect(obj.x,obj.y,this.x,this.y,this.width,this.height)){
+            this.func(this.param);
         }
     }
 }
