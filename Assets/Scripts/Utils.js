@@ -4,7 +4,7 @@ function clearScreen(){
 
 function createImage(src){
 	let tempImage = new Image();
-	tempImage.src = src;
+	tempImage.src = "Assets/Sprites/"+src;
 	return tempImage;
 }
 
@@ -42,7 +42,7 @@ function getFPS() {
 			timeScale = fps/90;
 		}
 		else{
-			timeScale = 0
+			timeScale = 1
 			console.log("FPS Got Messed Up.")
 		}
 	}

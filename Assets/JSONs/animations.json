@@ -1,0 +1,90 @@
+{
+    "example": {
+        "idle": [
+            "North",
+            "North East",
+            "East",
+            "South East",
+            "South",
+            "South West",
+            "West",
+            "North West"
+        ]   
+    },
+    "penguin": {
+        "idle": [
+            [{"sx": 0, "sy": 0, "x": -20, "y": -25}],
+            [{"sx": 1, "sy": 0, "x": -17, "y": -25}],
+            [{"sx": 2, "sy": 0, "x": -15, "y": -25}],
+            [{"sx": 3, "sy": 0, "x": -17, "y": -25}],
+            [{"sx": 4, "sy": 0, "x": -20, "y": -25}],
+            [{"sx": 10, "sy": 4, "x": -24, "y": -25}],
+            [{"sx": 11, "sy": 4, "x": -27, "y": -25}],
+            [{"sx": 12, "sy": 4, "x": -24, "y": -25}]
+        ],
+        "walk": [
+            [{"sx": 5, "sy": 0},{"sx": 6},{"sx": 7},{"sx": 8},{"sx": 9},{"sx": 10},{"sx": 11},{"sx": 12}],
+            [{"sx": 0, "sy": 1},{"sx": 1},{"sx": 2},{"sx": 3},{"sx": 4},{"sx": 5},{"sx": 6},{"sx": 7}],
+            [{"sx": 9, "sy": 1},{"sx": 10},{"sx": 11},{"sx": 12},{"sx": 13},{"sx": 0, "sy": 2},{"sx": 1},{"sx": 2}],
+            [{"sx": 4, "sy": 2},{"sx": 5},{"sx": 6},{"sx": 7},{"sx": 8},{"sx": 9},{"sx": 10},{"sx": 11}],
+            [{"sx": 13, "sy": 2},{"sx": 0, "sy": 3},{"sx": 1},{"sx": 2},{"sx": 3},{"sx": 4},{"sx": 5}],
+            [{"sx": 9, "sy": 6},{"sx": 8},{"sx": 7},{"sx": 6},{"sx": 5},{"sx": 4},{"sx": 3},{"sx": 2}],
+            [{"sx": 4, "sy": 5},{"sx": 3},{"sx": 2},{"sx": 1},{"sx": 0},{"sx": 13, "sy": 6},{"sx": 12},{"sx": 11}],
+            [{"sx": 13, "sy": 5},{"sx": 12},{"sx": 11},{"sx": 10},{"sx": 9},{"sx": 8},{"sx": 7},{"sx": 6}]
+        ]
+    },
+    "critters": {
+        "oldHamster":{
+            "idle": [
+                [{"sx": 0, "sy": 0, "x": 0, "y": 0}]
+            ]
+        },
+        "penguin": {
+
+            "images": [
+                "http://web.archive.org/web/20201024190044/https://media.boxcritters.com/critters/penguin/sprites-0.png"
+            ],
+            
+            "framerate": 20,
+            "frames": [
+                [1, 1, 65, 90, 0, -36, -52],
+                [1, 1, 65, 90, 0, -36, -52],
+                [1, 1, 65, 90, 0, -36, -52],
+                [68, 1, 65, 90, 0, -36, -52],
+                [68, 1, 65, 90, 0, -36, -52],
+                [135, 1, 65, 90, 0, -36, -52],
+                [202, 1, 65, 90, 0, -36, -52],
+                [202, 1, 65, 90, 0, -36, -52],
+                [269, 1, 40, 44, 0, -60, -62],
+                [269, 1, 40, 44, 0, -60, -62],
+                [311, 1, 40, 44, 0, -48, -62],
+                [353, 1, 41, 44, 0, -36, -62],
+                [353, 1, 41, 44, 0, -36, -62],
+                [396, 1, 50, 27, 0, -43, -121]
+            ],
+            
+            "animations": {
+                "body0": { "frames": [0] },
+                "body1": { "frames": [1] },
+                "body7": { "frames": [2] },
+                "body2": { "frames": [3] },
+                "body3": { "frames": [4] },
+                "body4": { "frames": [5] },
+                "body5": { "frames": [6] },
+                "body6": { "frames": [7] },
+                "face2": { "frames": [8] },
+                "face3": { "frames": [9] },
+                "face4": { "frames": [10] },
+                "face5": { "frames": [11] },
+                "face6": { "frames": [12] },
+                "feet": { "frames": [13] }
+            },
+            
+            "texturepacker": [
+                    "SmartUpdateHash: $TexturePacker:SmartUpdate:5b6349c2e886d28057e3176ad8efa564:20c0f090a24b0b33dabc78660e775c40:6811a9a90bad8562d7be890a479a72ac$",
+                    "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+            ]
+            
+            }
+    }
+}

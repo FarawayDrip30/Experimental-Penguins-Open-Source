@@ -43,20 +43,30 @@ class State{
 class MenuState extends State{
     constructor(){
         super();
-        this.playButton = new Shape(canvas.width/2-150,canvas.height/2-50,300,100,"black",0,0);
+        this.playButton = new MenuButton(canvas.width/2-40,310,80,25,"Next");
+        this.logo = new Sprite(createImage("logo/logo.png"),0,0,1935,1000,canvas.width/2-180,30,360,210,0,0);
+        this.enterNameText = [new TextObject(canvas.width/2, 260, "bold 14px Arial","black","Please enter a name"),
+                                new TextObject(canvas.width/2, 272, " bold 14px Arial","black","for your penguin?")];
     }
 
     render(){
         clearScreen();
         this.playButton.draw();
+        this.logo.draw();
+        this.enterNameText.forEach((txt) => {txt.draw();})
     }
 
     onClick(evt){
         let mousePos = getMousePos(canvas,evt);
-        if(isInRect(mousePos.x,mousePos.y,this.playButton.x,this.playButton.y,this.playButton.width,this.playButton.height)){
+        if(this.playButton.isInside(mousePos.x,mousePos.y)){
             exHUD.hidden = false;
+            titleScreenHUD.hidden = true;
             changeState(new PlayState());
         }
+    }
+    onMouseMove(evt){
+        let mousePos = getMousePos(canvas,evt);
+        this.playButton.mouseMoved(mousePos.x,mousePos.y);
     }
 }
 
@@ -74,7 +84,9 @@ class PlayState extends State{
         this.currentRoom = snowRoom;
         
         this.playerSelected = false;
-        this.player = new Penguin(100,100,"Player");
+        let playerX = Math.random() * 620 + 50;
+        let playerY = Math.random() * 190 + 150;
+        this.player = new Penguin(playerX,playerY,nameEntry.value);
     }
     changeRoom(roomID){
         if(this.currentRoom != this.rooms[roomID]){
@@ -163,6 +175,7 @@ class PlayState extends State{
 
     onSend(message){
         this.player.speak(message);
+        addToChatlog(this.player.name + " says: " + message);
     }
 }
 

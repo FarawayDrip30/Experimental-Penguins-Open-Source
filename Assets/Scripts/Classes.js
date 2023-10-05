@@ -1,48 +1,3 @@
-class Shape{
-    constructor(x,y,width,height,colour,originX,originY){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.colour = colour;
-        this.originX = originX;
-        this.originY = originY;
-    }
-
-    draw(){
-        ctx.beginPath();
-        ctx.fillStyle = this.colour;
-        ctx.rect(this.x + this.originX, this.y + this.originY, this.width, this.height);
-        ctx.fill();
-    }
-}
-
-class Sprite{
-    constructor(img, sx, sy, swidth, sheight, x, y, width, height, originX, originY){
-        this.img = img;
-        this.sx = sx;
-        this.sy = sy;
-        this.swidth = swidth;
-        this.sheight = sheight;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.originX = originX;
-        this.originY = originY;
-    }
-
-    draw(){
-        ctx.drawImage(this.img,this.sx,this.sy,this.swidth,this.sheight,this.x + this.originX,this.y + this.originY,this.width,this.height)
-        this.drawMore()
-    }
-
-    drawMore(){
-
-    }
-}
-
-
 class Penguin extends Sprite{
     constructor(x,y,name){
         super(penguinSS,0,0,48,48,x,y,50,50,-20,-25);
@@ -302,5 +257,53 @@ class RoomButton extends Sprite{
         ctx.font = "10px Arial";
         ctx.textAlign = "left";
         ctx.fillText(this.room.name, 620, this.y + 10);
+    }
+}
+
+class MenuButton {
+    constructor(x,y,width,height,text){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.text = text;
+        ctx.textAlign = "center";
+
+        this.normalColour = "#FEBB00";
+        this.hoverColour = "#FFEF80";
+        this.colour = this.normalColour;
+
+        this.textX = this.x + this.width / 2;
+        this.textY = this.y + this.height / 2 + 4;
+    }
+
+    draw(){
+        ctx.beginPath();
+        ctx.fillStyle = this.colour;
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = "#000000";
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+
+        ctx.font = "bold 15px Arial";
+        ctx.fillText(this.text,this.textX,this.textY);
+    }
+
+    isInside(mouseX,mouseY){
+        if(isInRect(mouseX,mouseY,this.x,this.y,this.width,this.height)){
+            return true;
+        }
+    }
+    
+    mouseMoved(mouseX,mouseY){
+        if(this.isInside(mouseX,mouseY)){
+            this.colour = this.hoverColour;
+        }
+        else{
+            this.colour = this.normalColour;
+        }
     }
 }
